@@ -26,9 +26,6 @@
 <body>
     <h2>Cadastro de Apontamento</h2>
     <form id="apontamentoForm">
-        <label for="name">Nome:</label>
-        <input type="text" id="name" name="name" required>
-
         <label for="location">Local:</label>
         <input type="text" id="location" name="location" required>
 
@@ -45,66 +42,4 @@
     <ul id="reportsList"></ul>
 
     <script>
-        const apiUrl = "https://backend-report-systemnpm-install.onrender.com"; // URL da API no Render
-
-        // Enviar apontamento
-        document.getElementById("apontamentoForm").addEventListener("submit", async function(event) {
-            event.preventDefault();
-
-            const formData = new FormData(this); // Captura todos os dados do formulário automaticamente
-
-            try {
-                const response = await fetch(`${apiUrl}/upload`, {
-                    method: "POST",
-                    body: formData
-                });
-
-                if (!response.ok) {
-                    throw new Error("Erro ao enviar apontamento.");
-                }
-
-                const result = await response.json();
-                alert(result.message);
-                this.reset(); // Reseta o formulário
-                loadReports(); // Recarrega a lista de apontamentos
-            } catch (error) {
-                alert("Falha ao conectar com o servidor.");
-                console.error(error);
-            }
-        });
-
-        // Carregar apontamentos
-        async function loadReports() {
-            try {
-                const response = await fetch(`${apiUrl}/reports`);
-                if (!response.ok) {
-                    throw new Error("Erro ao buscar apontamentos.");
-                }
-
-                const reports = await response.json();
-                const list = document.getElementById("reportsList");
-                list.innerHTML = "";
-
-                reports.forEach(report => {
-                    const li = document.createElement("li");
-                    li.innerHTML = `<strong>${report.name}</strong> - ${report.location} <br> ${report.description}`;
-
-                    report.images.forEach(img => {
-                        const imgElement = document.createElement("img");
-                        imgElement.src = `${apiUrl}/${img}`;
-                        imgElement.onerror = () => imgElement.style.display = "none"; // Se a imagem não carregar, esconde
-                        li.appendChild(imgElement);
-                    });
-
-                    list.appendChild(li);
-                });
-            } catch (error) {
-                console.error("Erro ao carregar relatórios:", error);
-            }
-        }
-
-        // Carregar lista ao iniciar
-        loadReports();
-    </script>
-</body>
-</html>
+        const apiUrl = "https://backend-report-system
